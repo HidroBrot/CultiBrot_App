@@ -8,12 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter create .
+
+      # crea la estructura mínima del proyecto (web/.metadata/.idea, etc.)
+      - run: flutter create . --platforms=web --project-name=cultibrot_app
+
       - run: flutter pub get
       - run: flutter build web --release --pwa-strategy=offline-first
+
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
