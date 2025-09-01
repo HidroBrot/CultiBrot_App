@@ -1,7 +1,7 @@
 name: web
 on:
   push:
-    branches: [ main ]
+    branches: [ caja-1 ]
 
 jobs:
   build:
