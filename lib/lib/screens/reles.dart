@@ -6,12 +6,29 @@ class RelesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Relés - Caja 2")),
-      body: const Center(
-        child: Text(
-          "Aquí controlarás ventilación, extracción, luces, bombas, nebulizadores, humidificador y oxigenador.",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18),
+      appBar: AppBar(
+        title: const Text("Control de Relés - Caja 2"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text("🔌 Control de dispositivos conectados:",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            Text("🌬️ Ventilación"),
+            Text("💨 Extracción"),
+            Text("💡 LlumBrot (Luces)"),
+            Text("💧 AigoGrossaBrot (Riego Emergencia)"),
+            Text("⚡ NutriBrot (Dosis nutrientes)"),
+            Text("💦 Bomba de circulación"),
+            Text("☁️ Nebulizadores"),
+            Text("🌫️ Humidificador"),
+            Text("💨 Oxigenador"),
+            Text("☀️ SolarBrot (Emergencia corte eléctrico)"),
+            Text("🌡️ Aire acondicionado (FredBrot futuro)"),
+          ],
         ),
       ),
     );
