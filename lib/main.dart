@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+// Importa todas las pantallas que ya creaste
+import 'pantallas/Sensores.dart';
+import 'pantallas/reles.dart';
+import 'pantallas/cultiBrot.dart';
+import 'pantallas/MetgeBrot.dart';
+import 'pantallas/SocialBrot.dart';
+import 'pantallas/Tienda.dart';
+
+void main() {
   runApp(const HidroBrotApp());
 }
 
@@ -15,113 +19,13 @@ class HidroBrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'HidroBrot',
-      theme: ThemeData.dark(),
-      home: const AuthGate(),
+      title: 'HidroBrot App',
+      theme: ThemeData.dark(), // Tema oscuro por defecto
+      home: const DashboardScreen(),
     );
   }
 }
 
-class AuthGate extends StatelessWidget {
-  const AuthGate({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-        if (snapshot.hasData) {
-          return const DashboardScreen(); // Usuario logueado
-        }
-        return const LoginScreen(); // Usuario no logueado
-      },
-    );
-  }
-}
-
-// Pantalla de Login con email/contraseña
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  String _errorMessage = "";
-
-  Future<void> _login() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    } catch (e) {
-      setState(() {
-        _errorMessage = "Error: ${e.toString()}";
-      });
-    }
-  }
-
-  Future<void> _register() async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    } catch (e) {
-      setState(() {
-        _errorMessage = "Error: ${e.toString()}";
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Login HidroBrot")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: "Contraseña"),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: const Text("Iniciar sesión"),
-            ),
-            ElevatedButton(
-              onPressed: _register,
-              child: const Text("Registrarse"),
-            ),
-            if (_errorMessage.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Text(_errorMessage, style: const TextStyle(color: Colors.red)),
-            ]
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Dashboard con navegación
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -132,13 +36,14 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
+  // Aquí conectamos las pantallas creadas
   final List<Widget> _pages = const [
-    Center(child: Text("Sensores")),
-    Center(child: Text("Relés - Caja 2")),
-    Center(child: Text("CultiBrot - Seguimiento")),
-    Center(child: Text("MetgeBrot - Diagnóstico")),
-    Center(child: Text("SocialBrot - Comunidad")),
-    Center(child: Text("Tienda / Accesorios")),
+    SensoresScreen(),
+    RelesScreen(),
+    CultiBrotScreen(),
+    MetgeBrotScreen(),
+    SocialBrotScreen(),
+    TiendaScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -150,19 +55,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('HidroBrot App')),
+      appBar: AppBar(
+        title: const Text('HidroBrot App'),
+        centerTitle: true,
+      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.sensors), label: "Sensores"),
-          BottomNavigationBarItem(icon: Icon(Icons.power), label: "Relés"),
-          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: "CultiBrot"),
-          BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: "MetgeBrot"),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: "SocialBrot"),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Tienda"),
+          BottomNavigationBarItem(icon: Icon(Icons.sensors), label: 'Sensores'),
+          BottomNavigationBarItem(icon: Icon(Icons.power), label: 'Relés'),
+          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'CultiBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: 'MetgeBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'SocialBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Tienda'),
         ],
       ),
     );
