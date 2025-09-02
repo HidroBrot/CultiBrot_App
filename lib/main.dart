@@ -19,7 +19,7 @@ class HidroBrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'HidroBrot App',
+      title: 'Aplicación HidroBrot',
       theme: ThemeData.dark(), // Tema oscuro por defecto
       home: const DashboardScreen(),
     );
@@ -56,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HidroBrot App'),
+        title: const Text('Aplicación HidroBrot'),
         centerTitle: true,
       ),
       body: _pages[_selectedIndex],
