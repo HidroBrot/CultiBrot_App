@@ -44,26 +44,84 @@ class AuthGate extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+// Pantalla de Login con email/contraseña
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String _errorMessage = "";
+
+  Future<void> _login() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } catch (e) {
+      setState(() {
+        _errorMessage = "Error: ${e.toString()}";
+      });
+    }
+  }
+
+  Future<void> _register() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } catch (e) {
+      setState(() {
+        _errorMessage = "Error: ${e.toString()}";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login HidroBrot')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            // Login anónimo temporal (más adelante metemos email/pass)
-            await FirebaseAuth.instance.signInAnonymously();
-          },
-          child: const Text("Entrar"),
+      appBar: AppBar(title: const Text("Login HidroBrot")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: "Email"),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: "Contraseña"),
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text("Iniciar sesión"),
+            ),
+            ElevatedButton(
+              onPressed: _register,
+              child: const Text("Registrarse"),
+            ),
+            if (_errorMessage.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Text(_errorMessage, style: const TextStyle(color: Colors.red)),
+            ]
+          ],
         ),
       ),
     );
   }
 }
 
+// Dashboard con navegación
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -103,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.power), label: "Relés"),
           BottomNavigationBarItem(icon: Icon(Icons.timeline), label: "CultiBrot"),
           BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: "MetgeBrot"),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: "SocialBrot"),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: "SocialBrot"),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Tienda"),
         ],
       ),
