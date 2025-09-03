@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _errorMessage = '';
+  String _errorMessage = "";
 
   Future<void> _login() async {
     try {
@@ -52,7 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("HidroBrot - Login")),
+      appBar: AppBar(
+        title: const Text("🔑 HidroBrot - Login"),
+        backgroundColor: Colors.teal[800],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -64,17 +67,30 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextField(
               controller: _passwordController,
-              obscureText: true,
               decoration: const InputDecoration(labelText: "Contraseña"),
+              obscureText: true,
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: _login, child: const Text("Iniciar Sesión")),
-            ElevatedButton(onPressed: _register, child: const Text("Registrarse")),
-            ElevatedButton(onPressed: _loginAnon, child: const Text("Entrar como invitado")),
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text("Iniciar Sesión"),
+            ),
+            ElevatedButton(
+              onPressed: _register,
+              child: const Text("Registrarse"),
+            ),
+            ElevatedButton(
+              onPressed: _loginAnon,
+              child: const Text("Entrar como invitado"),
+            ),
             if (_errorMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text(_errorMessage, style: const TextStyle(color: Colors.red)),
+                child: Text(
+                  _errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
               ),
           ],
         ),
