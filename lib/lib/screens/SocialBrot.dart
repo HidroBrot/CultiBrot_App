@@ -6,36 +6,27 @@ class SocialBrotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("🌐 SocialBrot - Comunidad")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              "👥 Comunidad privada SocialBrot",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-
-            Text("📌 Funciones principales:"),
-            Text("• Publicar fotos, vídeos y escritos relacionados con cultivo"),
-            Text("• Seguridad anti-captura y anti-descarga"),
-            Text("• Sistema de puntos y ranking por logros"),
-            Text("• Sorteos trimestrales de accesorios HidroBrot"),
-            Text("• Sorteo anual de un kit HibridoBrot para los top 10"),
-
-            SizedBox(height: 20),
-            Text(
-              "Ejemplo de muro social:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text("🔹 Usuario1: Mi planta creció 10 cm esta semana 🌱"),
-            Text("🔹 Usuario2: Usando NutriBrot, los resultados son brutales 💧"),
-            Text("🔹 Usuario3: Conseguí controlar la humedad con AigoGrossaBrot ✅"),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text("🌱 SocialBrot - Comunidad"),
+        backgroundColor: Colors.indigo[800],
       ),
-    );
-  }
-}
+      body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Comparte tus cultivos y aprende con la comunidad",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+
+          // Lista de publicaciones de ejemplo
+          Expanded(
+            child: ListView(
+              children: const [
+                Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      child
