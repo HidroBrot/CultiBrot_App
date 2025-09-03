@@ -6,31 +6,65 @@ class MetgeBrotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("🩺 MetgeBrot - Diagnóstico")),
+      appBar: AppBar(
+        title: const Text("🩺 MetgeBrot - Diagnóstico"),
+        backgroundColor: Colors.redAccent[700],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              "📷 Diagnóstico con IA",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          children: [
+            const Text(
+              "Diagnóstico Inteligente",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text("➤ Sube una foto de tu planta"),
-            Text("➤ La IA detectará plagas y carencias"),
-            Text("➤ Te mostrará recomendaciones inmediatas"),
-            Text("➤ Historial de diagnósticos anteriores"),
-
-            SizedBox(height: 20),
-            Text(
-              "Ejemplo de resultados:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Botón para subir foto
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Aquí luego conectamos cámara o galería
+                },
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Subir foto de la planta"),
+              ),
             ),
-            Text("• Plaga detectada: Ácaros rojos"),
-            Text("• Carencia: Nitrógeno bajo"),
-            Text("• Solución sugerida: Aplicar fertilizante NPK 20-10-10"),
+
+            const SizedBox(height: 30),
+
+            // Resultados de diagnóstico de ejemplo
+            Expanded(
+              child: ListView(
+                children: const [
+                  Card(
+                    elevation: 4,
+                    child: ListTile(
+                      leading: Icon(Icons.bug_report, color: Colors.red),
+                      title: Text("Posible plaga detectada"),
+                      subtitle: Text("Ácaros en hojas superiores."),
+                    ),
+                  ),
+                  Card(
+                    elevation: 4,
+                    child: ListTile(
+                      leading: Icon(Icons.science, color: Colors.orange),
+                      title: Text("Carencia nutricional"),
+                      subtitle: Text("Falta de magnesio: hojas amarillas."),
+                    ),
+                  ),
+                  Card(
+                    elevation: 4,
+                    child: ListTile(
+                      leading: Icon(Icons.check_circle, color: Colors.green),
+                      title: Text("Estado general"),
+                      subtitle: Text("La planta está en buen estado."),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
