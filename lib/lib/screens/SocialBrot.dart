@@ -10,23 +10,92 @@ class SocialBrotScreen extends StatelessWidget {
         title: const Text("🌱 SocialBrot - Comunidad"),
         backgroundColor: Colors.indigo[800],
       ),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              "Comparte tus cultivos y aprende con la comunidad",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+      body: ListView(
+        padding: const EdgeInsets.all(12),
+        children: const [
+          PostCard(
+            user: "JuanGrow",
+            content: "Mis tomates ya tienen flor 🌸🍅",
+            likes: 23,
+            comments: 4,
           ),
+          PostCard(
+            user: "HydroAna",
+            content: "Probando el módulo NutriBrot, increíble lo rápido que crecen 💧🌿",
+            likes: 45,
+            comments: 12,
+          ),
+          PostCard(
+            user: "CarlosHidro",
+            content: "Hoy instalé mi AigoGrossaBrot, el agua nunca falta 🚰",
+            likes: 19,
+            comments: 3,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-          // Lista de publicaciones de ejemplo
-          Expanded(
-            child: ListView(
-              children: const [
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.green,
-                      child
+class PostCard extends StatelessWidget {
+  final String user;
+  final String content;
+  final int likes;
+  final int comments;
+
+  const PostCard({
+    super.key,
+    required this.user,
+    required this.content,
+    required this.likes,
+    required this.comments,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.green,
+                  child: Text(user[0]),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  user,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+              content,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(Icons.favorite, color: Colors.red[400]),
+                const SizedBox(width: 5),
+                Text("$likes", style: const TextStyle(color: Colors.white)),
+                const SizedBox(width: 20),
+                Icon(Icons.comment, color: Colors.blue[300]),
+                const SizedBox(width: 5),
+                Text("$comments", style: const TextStyle(color: Colors.white)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
