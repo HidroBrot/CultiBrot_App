@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'login.dart';
-import 'dashboard.dart';
+import 'dart:async';
+import 'login.dart'; // aseguramos que la app pase al login tras el splash
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,48 +13,36 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAuth();
-  }
-
-  Future<void> _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 3)); // Tiempo del splash
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (mounted) {
-      if (user != null) {
-        // Usuario logueado → ir al dashboard
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
-        );
-      } else {
-        // Usuario no logueado → ir al login
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
-      }
-    }
+    // Timer de 3 segundos -> pasa al login
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black, // Fondo oscuro profesional
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 🔥 Aquí debes poner el logo oficial de HidroBrot
-            Icon(Icons.eco, size: 100, color: Colors.greenAccent),
-
-            const SizedBox(height: 20),
+            // Logo oficial de HidroBrot
+            Image.asset(
+              'assets/images/HBlogo.png',
+              width: 180,
+              height: 180,
+            ),
+            const SizedBox(height: 30),
             const Text(
               "HidroBrot",
               style: TextStyle(
+                color: Colors.greenAccent,
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
                 letterSpacing: 2,
               ),
             ),
@@ -63,12 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
             const Text(
               "Cultivo inteligente en tu bolsillo",
               style: TextStyle(
-                fontSize: 16,
                 color: Colors.white70,
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
               ),
             ),
-            const SizedBox(height: 40),
-            const CircularProgressIndicator(color: Colors.greenAccent),
           ],
         ),
       ),
