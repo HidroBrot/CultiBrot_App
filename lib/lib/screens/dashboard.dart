@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Importamos todas las pantallas
+// Importamos todas las pantallas finales
 import 'sensores.dart';
 import 'reles.dart';
 import 'cultibrot.dart';
