@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// Importamos todas las pantallas
 import 'sensores.dart';
 import 'reles.dart';
 import 'cultibrot.dart';
 import 'metgebrot.dart';
 import 'socialbrot.dart';
 import 'tienda.dart';
-import 'login.dart'; // 👈 necesario para volver al login
+import 'login.dart'; // necesario para volver al login tras cerrar sesión
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -36,7 +37,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _logout() async {
     await FirebaseAuth.instance.signOut();
-    // 🔄 Redirige al login
     if (mounted) {
       Navigator.pushReplacement(
         context,
@@ -49,8 +49,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("📊 HidroBrot - Panel"),
-        backgroundColor: Colors.teal[900],
+        title: const Text("🌱 HidroBrot - Panel"),
+        backgroundColor: Colors.green[900],
         actions: [
           IconButton(
             onPressed: _logout,
@@ -63,14 +63,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.sensors), label: 'Sensores'),
-          BottomNavigationBarItem(icon: Icon(Icons.power), label: 'Relés'),
-          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'CultiBrot'),
-          BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: 'MetgeBrot'),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'SocialBrot'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Tienda'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sensors),
+            label: 'Sensores',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.power),
+            label: 'Relés',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timeline),
+            label: 'CultiBrot',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.medical_services),
+            label: 'MetgeBrot',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'SocialBrot',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Tienda',
+          ),
         ],
       ),
     );
