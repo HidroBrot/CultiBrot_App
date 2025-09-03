@@ -8,14 +8,15 @@ class TiendaScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("🛒 Tienda HidroBrot"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.deepPurple[800],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12),
         children: const [
           ProductoCard(
             nombre: "NutriBrot",
-            descripcion: "Pack de nutrientes inteligentes (A+B, pH+, pH-, EC, limpieza).",
+            descripcion:
+                "Pack de nutrientes inteligentes (A+B, pH+, pH-, EC, limpieza).",
             precio: "49,99 €",
             icono: Icons.water_drop,
           ),
@@ -33,7 +34,8 @@ class TiendaScreen extends StatelessWidget {
           ),
           ProductoCard(
             nombre: "AigoGrossaBrot",
-            descripcion: "Depósito de emergencia inteligente con 60L y bomba incluida.",
+            descripcion:
+                "Depósito de emergencia inteligente con 60L y bomba incluida.",
             precio: "159,99 €",
             icono: Icons.storage,
           ),
@@ -72,20 +74,13 @@ class ProductoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: Icon(icono, size: 40, color: Colors.deepPurple),
-        title: Text(
-          nombre,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(descripcion),
-        trailing: Text(
-          precio,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
-        ),
-      ),
-    );
-  }
-}
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icono, size: 40, color: Colors.greenAccent),
+            const SizedBox(width: 15
