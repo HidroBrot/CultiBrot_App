@@ -6,35 +6,100 @@ class CultiBrotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("🌱 CultiBrot - Seguimiento")),
+      appBar: AppBar(
+        title: const Text("🌱 CultiBrot - Seguimiento"),
+        backgroundColor: Colors.teal[800],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              "📊 Timeline del cultivo",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          children: [
+            const Text(
+              "Cultivo: HidroBrot Demo",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text("➤ Fecha de siembra: 01/09/2025"),
-            Text("➤ Estado actual: Crecimiento"),
-            Text("➤ Último riego: hace 3 horas"),
-            Text("➤ Próximo riego: en 5 horas"),
-            Text("➤ Temperatura media: 24 °C"),
-            Text("➤ Humedad media: 65 %"),
-
-            SizedBox(height: 20),
-            Text(
-              "Funciones:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Línea de tiempo simple (ejemplo)
+            Expanded(
+              child: ListView(
+                children: const [
+                  TimelineTile(
+                      etapa: "Siembra",
+                      fecha: "01/03/2025",
+                      descripcion: "Inicio del cultivo."),
+                  TimelineTile(
+                      etapa: "Crecimiento",
+                      fecha: "15/03/2025",
+                      descripcion: "Fase vegetativa."),
+                  TimelineTile(
+                      etapa: "Floración",
+                      fecha: "20/04/2025",
+                      descripcion: "Inicio de floración."),
+                  TimelineTile(
+                      etapa: "Cosecha",
+                      fecha: "30/05/2025",
+                      descripcion: "Listo para recolectar."),
+                ],
+              ),
             ),
-            Text("• Añadir notas y fotos de cultivo"),
-            Text("• Generar informes en PDF/CSV"),
-            Text("• Crear timelapse con imágenes"),
+
+            const SizedBox(height: 20),
+
+            // Botones de acción
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Aquí más adelante: añadir nota al cultivo
+                  },
+                  icon: const Icon(Icons.note_add),
+                  label: const Text("Añadir Nota"),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Aquí más adelante: exportar datos PDF/CSV
+                  },
+                  icon: const Icon(Icons.picture_as_pdf),
+                  label: const Text("Exportar"),
+                ),
+              ],
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// Widget para representar cada etapa del timeline
+class TimelineTile extends StatelessWidget {
+  final String etapa;
+  final String fecha;
+  final String descripcion;
+
+  const TimelineTile({
+    super.key,
+    required this.etapa,
+    required this.fecha,
+    required this.descripcion,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      elevation: 4,
+      child: ListTile(
+        leading: const Icon(Icons.check_circle, color: Colors.teal, size: 30),
+        title: Text(
+          etapa,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text("$fecha\n$descripcion"),
+        isThreeLine: true,
       ),
     );
   }
