@@ -7,24 +7,56 @@ class SensoresScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sensores HidroBrot"),
+        title: const Text("📊 Sensores HidroBrot"),
+        backgroundColor: Colors.green[800],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(16),
+        child: GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
           children: const [
-            Text("📡 Sensores en tiempo real:",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
-            Text("🌡️ Temperatura ambiente: 25 ºC"),
-            Text("💧 Humedad ambiente: 60 %"),
-            Text("🌊 Temperatura agua: 22 ºC"),
-            Text("📏 Nivel agua: 75 %"),
-            Text("⚡ pH: 6.2"),
-            Text("💡 EC: 1.8 mS/cm"),
-            Text("☀️ Luz: 4500 lux"),
-            Text("🌬️ CO₂: 800 ppm"),
+            SensorCard(icon: Icons.thermostat, label: "Temp. Ambiente", value: "25 °C"),
+            SensorCard(icon: Icons.water_drop, label: "Humedad", value: "60 %"),
+            SensorCard(icon: Icons.opacity, label: "Temp. Agua", value: "22 °C"),
+            SensorCard(icon: Icons.storage, label: "Nivel Agua", value: "75 %"),
+            SensorCard(icon: Icons.science, label: "pH", value: "6.2"),
+            SensorCard(icon: Icons.electrical_services, label: "EC", value: "1.8 mS/cm"),
+            SensorCard(icon: Icons.wb_sunny, label: "Luz", value: "4500 lux"),
+            SensorCard(icon: Icons.air, label: "CO₂", value: "800 ppm"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SensorCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const SensorCard({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: Colors.green, size: 40),
+            const SizedBox(height: 10),
+            Text(label, style: const TextStyle(color: Colors.white, fontSize: 14)),
+            Text(value, style: const TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
