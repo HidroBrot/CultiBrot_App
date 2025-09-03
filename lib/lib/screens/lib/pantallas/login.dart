@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _errorMessage = "";
+  String _errorMessage = '';
 
   Future<void> _login() async {
     try {
@@ -39,6 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _loginAnon() async {
+    try {
+      await FirebaseAuth.instance.signInAnonymously();
+    } catch (e) {
+      setState(() {
+        _errorMessage = "Error en login anónimo: $e";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,29 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _emailController,
               decoration: const InputDecoration(labelText: "Email"),
             ),
-            const SizedBox(height: 10),
             TextField(
               controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(labelText: "Contraseña"),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: const Text("Iniciar sesión"),
-            ),
-            ElevatedButton(
-              onPressed: _register,
-              child: const Text("Registrarse"),
-            ),
-            if (_errorMessage.isNotEmpty) ...[
-              const SizedBox(height: 15),
-              Text(
-                _errorMessage,
-                style: const TextStyle(color: Colors.red),
-                textAlign: TextAlign.center,
+            ElevatedButton(onPressed: _login, child: const Text("Iniciar Sesión")),
+            ElevatedButton(onPressed: _register, child: const Text("Registrarse")),
+            ElevatedButton(onPressed: _loginAnon, child: const Text("Entrar como invitado")),
+            if (_errorMessage.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(_errorMessage, style: const TextStyle(color: Colors.red)),
               ),
-            ]
           ],
         ),
       ),
