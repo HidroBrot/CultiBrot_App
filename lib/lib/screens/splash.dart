@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'login.dart'; // aseguramos que la app pase al login tras el splash
+import 'login.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final String lang;
+  const SplashScreen({super.key, this.lang = 'es'});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -13,11 +14,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Timer de 3 segundos -> pasa al login
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen(lang: widget.lang)),
       );
     });
   }
@@ -25,36 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Fondo oscuro profesional
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo oficial de HidroBrot
-            Image.asset(
-              'assets/images/HBlogo.png',
-              width: 180,
-              height: 180,
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              "HidroBrot",
-              style: TextStyle(
-                color: Colors.greenAccent,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
-            ),
+            Image.asset("assets/images/HBlogo.png", height: 120),
+            const SizedBox(height: 20),
+            const Text("HidroBrot",
+                style: TextStyle(color: Colors.greenAccent, fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
-            const Text(
-              "Cultivo inteligente en tu bolsillo",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+            const Text("Cultivo inteligente en tu bolsillo",
+                style: TextStyle(color: Colors.white70, fontSize: 16, fontStyle: FontStyle.italic)),
           ],
         ),
       ),
