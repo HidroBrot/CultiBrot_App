@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-// Importamos todas las pantallas finales
 import 'sensores.dart';
 import 'reles.dart';
 import 'cultibrot.dart';
 import 'metgebrot.dart';
 import 'socialbrot.dart';
 import 'tienda.dart';
-import 'login.dart'; // necesario para volver al login tras cerrar sesión
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  final String lang;
+  const DashboardScreen({super.key, this.lang = 'es'});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -20,77 +17,42 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
-    SensoresScreen(),
-    RelesScreen(),
-    CultiBrotScreen(),
-    MetgeBrotScreen(),
-    SocialBrotScreen(),
-    TiendaScreen(),
-  ];
+  late final List<Widget> _pages;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      SensoresScreen(lang: widget.lang),
+      RelesScreen(lang: widget.lang),
+      CultiBrotScreen(lang: widget.lang),
+      MetgeBrotScreen(lang: widget.lang),
+      SocialBrotScreen(lang: widget.lang),
+      TiendaScreen(lang: widget.lang),
+    ];
   }
 
-  Future<void> _logout() async {
-    await FirebaseAuth.instance.signOut();
-    if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    }
+  void _onItemTapped(int index) {
+    setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("🌱 HidroBrot - Panel"),
-        backgroundColor: Colors.green[900],
-        actions: [
-          IconButton(
-            onPressed: _logout,
-            icon: const Icon(Icons.logout),
-            tooltip: "Cerrar sesión",
-          ),
-        ],
-      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.greenAccent,
         unselectedItemColor: Colors.grey,
+        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sensors),
-            label: 'Sensores',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.power),
-            label: 'Relés',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timeline),
-            label: 'CultiBrot',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medical_services),
-            label: 'MetgeBrot',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'SocialBrot',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Tienda',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.sensors), label: 'Sensores'),
+          BottomNavigationBarItem(icon: Icon(Icons.power), label: 'Relés'),
+          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'CultiBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: 'MetgeBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'SocialBrot'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Tienda'),
         ],
       ),
     );
