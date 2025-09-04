@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'screens/splash.dart'; // ✅ Importamos el splash
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'screens/splash.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const HidroBrotApp());
 }
 
@@ -15,12 +13,20 @@ class HidroBrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'HidroBrot App',
+      title: 'HidroBrot',
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.greenAccent,
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const SplashScreen(), // ✅ Splash como pantalla inicial
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es', ''), Locale('en', ''), Locale('de', ''), Locale('fr', ''),
+      ],
+      home: const SplashScreen(lang: 'es'),
     );
   }
 }
